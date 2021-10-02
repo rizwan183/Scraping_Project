@@ -10,7 +10,7 @@ driver.get('https://www.instagram.com')
 driver.maximize_window()
 time.sleep(10)
 userinput = driver.find_elements_by_xpath("//input[@name='username']")
-print(userinput)
+
 time.sleep(5)
 userinput[0].send_keys("ansari.rizwan.007")#userName
 
@@ -50,43 +50,39 @@ followersListData = []
 while c <= 50:
     time.sleep(2)
     scr = driver.find_elements_by_xpath("//div[@class='isgrP']")
-    print(scr)
+
     driver.execute_script("arguments[0].scrollTop=arguments[0].scrollHeight", scr[0])
     followersList = driver.find_elements(By.CLASS_NAME, "isgrP")
     flage = False
     for follower in followersList:
         check = follower.find_elements_by_tag_name("li")
-        print("len", len(check))
+
         driver.implicitly_wait(10)
-        # nofollowers = nofollowers + 3
+
         checklen = len(check)
-        print("both len", nofollowers, checklen, type(nofollowers), type(checklen))
-        # if nofollowers == checklen:
+
+
         if checklen >= 500:
-            print("In true ____________________---")
-            # totalPeople.append(check)
+
             d = 0
             for user in check:
-                print("--------------userInfo----------------------")
-                #print(u)
+
                 if d == 0 or d == 1 or d == 2 or d==3 or d==4:
                     pass
                 else:
                     flage = True
-                    print("else")
+
                     try:
                         url = user.find_element_by_tag_name("a")
-                        print("urlsssssss", url.get_attribute("href"))
+
                         usrurl = url.get_attribute("href")
                     except:
                         usrurl=''
                     totalPeople.append(usrurl)
-                    print(user)
 
-                    print(user.text)
                     user = user.text
                     user = user.split("\n")
-                    print(user)
+
                     userInf = []
                     username = user[0]
                     fullname = user[1]
@@ -94,10 +90,7 @@ while c <= 50:
                     userInf.append(str(username))
                     userInf.append(str(usrurl))
                     followersListData.append(userInf)
-                    # for name in username[1:-2]:
-                    #     fullname=fullname+name
-                    print(username, fullname)
-                    print("break      break")
+
                 d = d + 1
 
             break
@@ -108,7 +101,7 @@ while c <= 50:
     else:
         pass
 
-    print(len(followersList))
+
     c = c + 1
 fields = ["Full Name", "User Name", "User Profile Link"]
 with open('Followers.csv', 'w', newline='') as file:
@@ -119,9 +112,4 @@ with open('Followers.csv', 'w', newline='') as file:
 
     # writing the data rows
     csvwriter.writerows(followersListData)
-# for foll in totalPeople:
-#     print(foll)
-#     driver.execute_script("window.open('');")
-#     driver.switch_to.window(driver.window_handles[1])
-#     driver.get(foll)
-#     # driver.implicitly_wait(30)
+
